@@ -70,7 +70,7 @@ git clone --bare https://gitlab.com/<username>/dotfiles.git $HOME/.mdf
 ```
 
 2. **Create the alias:**
-```
+```bash
 tee -a ~/.zsh/zsh_aliases << 'EOF'
 
 # mdf alias for bare git repo dotfile management
@@ -78,12 +78,21 @@ alias mdf="git --git-dir=$HOME/.mdf/ --work-tree=$HOME"
 
 EOF
 ```
+Source it:
+```bash
+source ~/.zsh/zsh_aliases
+```
 
 3. **Configure git and checkout files:**
-```
+```bash
 mdf config --local status.showUntrackedFiles no
-mdf checkout
+mdf checkout -f
 ```
+Note that you'll need to run `mdf checkout` with the `-f` flag to force the
+checkout. This means that everything will be restored from the repo to match
+exactly what is in git. This is a destructive action if you have existing
+config files on your machine, such as a local `.zshrc`. The local copy will be
+overwritten. 
 
 All set. Your dotfiles are now on your new machine and ready to use.
 
