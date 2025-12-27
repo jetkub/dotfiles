@@ -1,0 +1,23 @@
+# ls conveniences
+alias ls="ls --color=auto"
+alias ll="ls -halF"
+
+alias split_path="echo $PATH | tr ':' '\n'"
+
+command -v vim >/dev/null && alias vi="vim"
+
+# Ruby
+command -v bundle >/dev/null && alias be="bundle exec"
+
+# macOS-specific aliases
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  command -v port >/dev/null && alias port_rnsearch="port search --regex --name"
+  command -v limactl >/dev/null && alias lmc="limactl"
+fi
+
+# mdf alias for bare git repo dotfile management
+alias mdf="git --git-dir=$HOME/.mdf/ --work-tree=$HOME"
+
+# show color and use git style diff
+alias diff='diff --color=auto -u'
+
