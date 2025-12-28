@@ -1,5 +1,8 @@
-# Start timing
-# PROMPT_START_TIME=$(($(date +%s%N)/1000000)) # DEBUG
+# Start timing. Comment PROMPT_TIMING to disable. -v checks if variable is set.
+#PROMPT_TIMING=true
+if [[ -v PROMPT_TIMING ]]; then
+    PROMPT_START_TIME=$(($(date +%s%N)/1000000)) # DEBUG
+fi
 
 # SAVEHIST is the maximum number of events to save in the HISTFILE
 # HISTSIZE is maximum number of events to store in the internal history list
@@ -114,6 +117,8 @@ rsync() {
     fi
 }
 
-# End timing and display
-# PROMPT_END_TIME=$(($(date +%s%N)/1000000)) # DEBUG
-# echo "Prompt load time: $((PROMPT_END_TIME - PROMPT_START_TIME))ms"
+if [[ -n "$PROMPT_TIMING" ]]; then
+    # End timing and display
+    PROMPT_END_TIME=$(($(date +%s%N)/1000000)) # DEBUG
+    echo "Prompt load time: $((PROMPT_END_TIME - PROMPT_START_TIME))ms"
+fi
