@@ -72,6 +72,7 @@ git clone --bare https://gitlab.com/<username>/dotfiles.git $HOME/.mdf
 ```
 
 2. **Create the alias:**
+
 If you're tracking your shell config with `mdf`, then we only need to create 
 the alias for this session. Once we checkout the files, we'll have all the 
 aliases we've already configured, including `mdf`.
@@ -79,24 +80,25 @@ aliases we've already configured, including `mdf`.
 alias mdf="git --git-dir=$HOME/.mdf/ --work-tree=$HOME"
 ```
 
-3. **Configure git and checkout files:**
-```bash
-mdf config --local status.showUntrackedFiles no
-mdf checkout -f
-```
+3. **Checkout files:**
+
 Note that you'll need to run `mdf checkout` with the `-f` flag to force the
 checkout. This means that everything will be restored from the repo to match
 exactly what is in git. This is a destructive action if you have existing
 config files on your machine, such as a local `.zshrc`. The local copy will be
 overwritten. 
-
-4. **Source your shell config if needed:**
 ```bash
-source ~/.zshrc ~/.zprofile ~/.zshenv ~/.zsh/zsh_*
+mdf checkout -f
+```
 
-# I have a custom function to do this for me + rebuild the commands hash table
-# with rehash. rehash forces zsh to rebuild the command completion cache by 
-# re-scanning all directories in your $PATH. So in my case, run:
+4. **Source your shell config:**
+```bash
+source ~/.zshrc 
+
+# I have a custom function to source zsh configs + rebuild the commands hash
+# table with rehash. rehash forces zsh to rebuild the command completion cache 
+# by re-scanning all directories in your $PATH. So in my case, after sourcing
+# .zshrc, run:
 z_reload_shell
 ```
 
