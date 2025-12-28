@@ -23,9 +23,16 @@ export ZSH_CACHE_DIR="$ZSH/cache"
 source "$ZSH/zsh_prompt"
 #PS1="%F{red}%n%f%F{253}@%f%F{red}%m%f%F{253}:%f%B%F{74}%2~%f%b %B%F{79}%% %f%b"
 
+case $HOST in
+    mbpro16*)   _prompt_color='red' ;;
+    dawn*)      _prompt_color='027' ;;
+    dusk*)      _prompt_color='green' ;;
+    *)          _prompt_color='blue' ;;
+esac
+
 precmd() {
   local git_info=$(git_prompt_info)
-  PS1="%F{red}%n%f%F{253}@%f%F{red}%m%f%F{253}:%f%B%F{74}%2~%f%b${git_info} %B%F{79}%% %f%b"
+  PS1="%F{$_prompt_color}%n%f%F{253}@%f%F{$_prompt_color}%m%f%F{253}:%f%B%F{74}%2~%f%b${git_info} %B%F{79}%% %f%b"
 }
 
 # Create cache and completions dir and add to $fpath
