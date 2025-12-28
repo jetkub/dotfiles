@@ -15,7 +15,9 @@ This setup uses a **bare git repository** stored in `~/.mdf` to track configs in
 
 ## How?
 I don't recommend that you clone this repo. These are my configs. However, I
-want to describe how to do this yourself. Feel free to follow along.
+want to describe how to do this yourself and have a written guide for myself
+next time I need to set up a new machine with my configs. Feel free to follow 
+along.
 
 
 ### First time set up
@@ -26,7 +28,7 @@ git init --bare $HOME/.mdf
 
 2. **Create the alias:**
 
-Add to your shell config wherever you like; I have a separate zsh_aliases file.
+Add to your shell config wherever you like; I have a separate `zsh_aliases` file.
 ```bash
 tee -a ~/.zsh/zsh_aliases << 'EOF'
 
@@ -70,17 +72,11 @@ git clone --bare https://gitlab.com/<username>/dotfiles.git $HOME/.mdf
 ```
 
 2. **Create the alias:**
+If you're tracking your shell config with `mdf`, then we only need to create 
+the alias for this session. Once we checkout the files, we'll have all the 
+aliases we've already configured, including `mdf`.
 ```bash
-tee -a ~/.zsh/zsh_aliases << 'EOF'
-
-# mdf alias for bare git repo dotfile management
 alias mdf="git --git-dir=$HOME/.mdf/ --work-tree=$HOME"
-
-EOF
-```
-Source it:
-```bash
-source ~/.zsh/zsh_aliases
 ```
 
 3. **Configure git and checkout files:**
@@ -93,6 +89,16 @@ checkout. This means that everything will be restored from the repo to match
 exactly what is in git. This is a destructive action if you have existing
 config files on your machine, such as a local `.zshrc`. The local copy will be
 overwritten. 
+
+4. **Source your shell config if needed:**
+```bash
+source ~/.zshrc ~/.zprofile ~/.zshenv ~/.zsh/zsh_*
+
+# I have a custom function to do this for me + rebuild the commands hash table
+# with rehash. rehash forces zsh to rebuild the command completion cache by 
+# re-scanning all directories in your $PATH. So in my case, run:
+z_reload_shell
+```
 
 All set. Your dotfiles are now on your new machine and ready to use.
 
