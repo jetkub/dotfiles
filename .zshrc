@@ -117,7 +117,7 @@ rsync() {
     fi
 }
 
-if [[ -n "$PROMPT_TIMING" ]]; then
+if [[ -v PROMPT_TIMING ]]; then
     # End timing and display
     PROMPT_END_TIME=$(($(date +%s%N)/1000000)) # DEBUG
     echo "Prompt load time: $((PROMPT_END_TIME - PROMPT_START_TIME))ms"
