@@ -34,6 +34,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   fi
 
   if [[ -d "$HOME/Library/Application Support/BBEdit/Scripts" ]]; then
-    export MY_BBEDIT_SCRIPTS="$HOME/Library/Application Support/BBEdit/Scripts"
+    export MY_BBEDIT_SCRIPTS="$HOME/Library/Mobile Documents/iCloud~com~barebones~bbedit/Documents/Application Support/Scripts"
   fi
 fi
