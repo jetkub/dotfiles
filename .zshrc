@@ -62,11 +62,10 @@ source "$ZSH/zsh_key_binds"
 
 
 # Platform-specific integrations
-case "$OSTYPE" in
-  darwin*)
+# iTerm2
+if [[ "$LC_TERMINAL" == "iTerm2" ]]; then
     [[ -f "$HOME/.iterm2_shell_integration.zsh" ]] && source "$HOME/.iterm2_shell_integration.zsh"
-    ;;
-esac
+fi
 
 # Functions for interactive sessions
 z_ed_rc()      { $EDITOR ~/.zshrc; }
