@@ -45,7 +45,7 @@ mkdir -p "$ZSH_CACHE_DIR/completions"
 # Enable homebrew completions
 # Set FPATH so that zsh can find homebrew completions
 # Only add if not already present
-if [[ "$OSTYPE" == "darwin"* ]] && command -v brew >/dev/null 2>&1; then
+if command -v brew >/dev/null 2>&1; then
   local brew_completions="$(brew --prefix)/share/zsh-completions"
   if [[ "$FPATH" != *"$brew_completions"* ]]; then
     FPATH="$brew_completions:$FPATH"
