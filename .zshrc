@@ -102,7 +102,7 @@ z_search_conf() {
     fi
 
     # Search for the pattern and color the output
-    grep -rn --color=always "$1" ~/.zshenv ~/.zshrc ~/.zprofile ~/.zsh/zsh* |
+    grep -irn --color=always "$1" ~/.zshenv ~/.zshrc ~/.zprofile ~/.zsh/zsh* |
     grep -v "/.zsh/cache/brew_formulae"
 }
 
