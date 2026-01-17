@@ -104,7 +104,7 @@ z_search_conf() {
 
     # Search for the pattern and color the output
     grep -irn --color=always "$1" ~/.zshenv ~/.zshrc ~/.zprofile ~/.zsh/zsh* |
-    grep -v "/.zsh/cache/brew_formulae"
+    grep -Ev "brew_formulae|zsh_history"
 }
 
 # overwrite rsync to exclude macOS cruft
