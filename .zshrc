@@ -4,10 +4,15 @@ if [[ -v PROMPT_TIMING ]]; then
     PROMPT_START_TIME=$(($(date +%s%N)/1000000)) # DEBUG
 fi
 
+# zsh configuration directories
+export ZSH="$HOME/.zsh"
+export ZSH_CACHE_DIR="$ZSH/cache"
+
 # SAVEHIST is the maximum number of events to save in the HISTFILE
 # HISTSIZE is maximum number of events to store in the internal history list
 export SAVEHIST=400000
 export HISTSIZE=500000
+export HISTFILE="$ZSH/zsh_history"
 
 # zsh options
 setopt interactivecomments
@@ -17,10 +22,6 @@ setopt hist_reduce_blanks
 setopt hist_ignore_dups
 setopt hist_expire_dups_first
 setopt extended_history
-
-# zsh configuration directories
-export ZSH="$HOME/.zsh"
-export ZSH_CACHE_DIR="$ZSH/cache"
 
 # Prompt
 source "$ZSH/zsh_prompt"
