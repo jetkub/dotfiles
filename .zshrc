@@ -5,14 +5,14 @@ if [[ -v PROMPT_TIMING ]]; then
 fi
 
 # zsh configuration directories
-export ZSH="$HOME/.zsh"
-export ZSH_CACHE_DIR="$ZSH/cache"
+export ZDOTDIR="$HOME/.zsh"
+export ZSH_CACHE_DIR="$ZDOTDIR/cache"
 
 # SAVEHIST is the maximum number of events to save in the HISTFILE
 # HISTSIZE is maximum number of events to store in the internal history list
 export SAVEHIST=400000
 export HISTSIZE=500000
-export HISTFILE="$ZSH/zsh_history"
+export HISTFILE="$ZDOTDIR/zsh_history"
 
 # zsh options
 setopt interactivecomments
@@ -24,7 +24,7 @@ setopt hist_expire_dups_first
 setopt extended_history
 
 # Prompt
-source "$ZSH/zsh_prompt"
+source "$ZDOTDIR/zsh_prompt"
 #PS1="%F{red}%n%f%F{253}@%f%F{red}%m%f%F{253}:%f%B%F{74}%2~%f%b %B%F{79}%% %f%b"
 
 case $HOST in
@@ -57,9 +57,9 @@ fi
 autoload -Uz compinit && compinit
 
 # Load configuration modules
-source "$ZSH/zsh_completions"
-source "$ZSH/zsh_aliases"
-source "$ZSH/zsh_key_binds"
+source "$ZDOTDIR/zsh_completions"
+source "$ZDOTDIR/zsh_aliases"
+source "$ZDOTDIR/zsh_key_binds"
 
 
 # Platform-specific integrations
