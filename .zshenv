@@ -27,15 +27,9 @@ esac
 if [[ "$OSTYPE" == "darwin"* ]]; then
   export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
   export LIMA_HOME="$HOME/.lima"
-
-  # App-specific paths (these are just variables, not PATH modifications)
-  if [[ -d "$HOME/Library/Mobile Documents/com~apple~ScriptEditor2/Documents" ]]; then
-    export MY_SCRIPTEDITOR_DIR="$HOME/Library/Mobile Documents/com~apple~ScriptEditor2/Documents"
-  fi
-
-  if [[ -d "$HOME/Library/Application Support/BBEdit/Scripts" ]]; then
-    export MY_BBEDIT_SCRIPTS="$HOME/Library/Mobile Documents/iCloud~com~barebones~bbedit/Documents/Application Support/Scripts"
-  fi
+  export MY_NOTES="$HOME/Desktop/Resources/Notes"
+  export MY_SCRIPTEDITOR_DIR="$HOME/Library/Mobile Documents/com~apple~ScriptEditor2/Documents"
+  export MY_BBEDIT_SCRIPTS="$HOME/Library/Mobile Documents/iCloud~com~barebones~bbedit/Documents/Application Support/Scripts"
 fi
 
 # wsl-specific
