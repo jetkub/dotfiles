@@ -28,10 +28,10 @@ source "$ZDOTDIR/zsh_prompt"
 #PS1="%F{red}%n%f%F{253}@%f%F{red}%m%f%F{253}:%f%B%F{74}%2~%f%b %B%F{79}%% %f%b"
 
 case $HOST in
-    mbpro16*)   _prompt_color='red' ;;
-    dawn*)      _prompt_color='027' ;;
-    dusk*)      _prompt_color='green' ;;
-    *)          _prompt_color='blue' ;;
+    mbpro*|Mac*)    _prompt_color='red' ;;
+    dawn*)          _prompt_color='027' ;;
+    dusk*)          _prompt_color='green' ;;
+    *)              _prompt_color='blue' ;;
 esac
 
 precmd() {
