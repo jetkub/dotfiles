@@ -93,6 +93,11 @@ bindkey -M emacs '^[b' backward-word
 bindkey -M viins '^[b' backward-word
 bindkey -M vicmd '^[b' backward-word
 
+# [Ctrl-U] - delete from cursor to start of line
+bindkey -M emacs '^U' backward-kill-line
+bindkey -M viins '^U' backward-kill-line
+bindkey -M vicmd '^U' backward-kill-line
+
 # macOS-specific (really, iTerm2 specific)
 # set Option+Arrow keys to jump by word if I'm connected with iTerm2
 if [[ "$LC_TERMINAL" == "iTerm2" ]]; then
