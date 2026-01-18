@@ -127,6 +127,15 @@ get_bundleid() {
     esac
 }
 
+bin_script() {
+    if [ -z "$1" ]; then
+        echo "Usage: $0 <search_pattern>"
+        return 1
+    fi
+    cp -f "$1" "$HOME/bin"
+    echo "Deployed $1 to ~/bin"
+}
+
 if [[ -v PROMPT_TIMING ]]; then
     # End timing and display
     PROMPT_END_TIME=$(($(date +%s%N)/1000000)) # DEBUG

@@ -28,6 +28,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
   export LIMA_HOME="$HOME/.lima"
   export MY_NOTES="$HOME/Desktop/Resources/Notes"
+  export MY_SCRIPTS="$HOME/Desktop/Projects/Scripts"
   export MY_SCRIPTEDITOR_DIR="$HOME/Library/Mobile Documents/com~apple~ScriptEditor2/Documents"
   export MY_BBEDIT_SCRIPTS="$HOME/Library/Mobile Documents/iCloud~com~barebones~bbedit/Documents/Application Support/Scripts"
 fi
