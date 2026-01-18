@@ -117,6 +117,16 @@ rsync() {
     fi
 }
 
+get_bundleid() {
+    case "$OSTYPE" in
+        darwin*)
+            osascript -e "id of app \"$1\"" ;;
+        *)
+            echo "Unsupported OS" >&2
+            return 1 ;;
+    esac
+}
+
 if [[ -v PROMPT_TIMING ]]; then
     # End timing and display
     PROMPT_END_TIME=$(($(date +%s%N)/1000000)) # DEBUG
