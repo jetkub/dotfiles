@@ -136,6 +136,12 @@ bin_script() {
     echo "Deployed $1 to ~/bin"
 }
 
+print_term_col() {
+	for i in {0..255}; do
+		print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$'\n'}
+	done
+}
+
 if [[ -v PROMPT_TIMING ]]; then
     # End timing and display
     PROMPT_END_TIME=$(($(date +%s%N)/1000000)) # DEBUG
