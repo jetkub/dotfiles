@@ -93,6 +93,17 @@ endif
 " Don't scan included files for autocomplete (slow)
 set complete-=i
 
+" Improve auto-completion
+set completeopt=menu,menuone,noselect
+set completeopt+=noinsert  " Don't insert text until selection is made
+
+" Make Enter select completion instead of inserting newline
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+
+" Use Tab/S-Tab to navigate
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
 " Treat numbers with leading zeros as decimal, not octal
 set nrformats-=octal
 
