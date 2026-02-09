@@ -1,0 +1,216 @@
+" =============================================================================
+" GENERAL SETTINGS
+" =============================================================================
+
+" Disable vi compatibility
+set nocompatible
+
+" Enable file type detection, plugins, and indent rules
+filetype plugin indent on
+
+
+" =============================================================================
+" DISPLAY & UI
+" =============================================================================
+
+" Show line numbers
+set number
+
+" Always show status line
+set laststatus=2
+
+" Show cursor position in status line
+set ruler
+
+" Enhanced command-line completion menu
+set wildmenu
+
+" Keep 5 lines visible above/below cursor when scrolling
+set scrolloff=5
+
+" Smooth horizontal scrolling, 2 columns of context
+set sidescroll=1
+set sidescrolloff=2
+
+" Show as much of long lines as possible instead of @@@
+set display+=lastline
+
+" Show @@@ in last column for truncated lines
+set display+=truncate
+
+" Define how invisible characters appear with :set list
+set listchars=tab:▸\ ,eol:¬,space:·,trail:~,extends:>,precedes:<
+
+" Enable 256 color support
+set term=xterm-256color
+set t_Co=256
+
+" Enable mouse support in all modes
+set mouse=a
+
+" Color scheme
+set background=dark
+colorscheme jellybeans
+
+" Enable syntax highlighting
+syntax enable
+
+
+" =============================================================================
+" SEARCH
+" =============================================================================
+
+" Show matches incrementally as you type
+set incsearch
+
+" Highlight all search matches
+set hlsearch
+
+" =============================================================================
+" EDITING BEHAVIOR
+" =============================================================================
+
+" Allow backspace over indentation, line breaks, and insert start
+set backspace=indent,eol,start
+
+" Tab inserts shiftwidth spaces at line start
+set smarttab
+
+" Use spaces instead of tabs
+set expandtab
+
+" Number of spaces for each indentation level
+set shiftwidth=4
+
+" Number of spaces that a tab character displays as
+set tabstop=4
+
+" Delete comment leader when joining commented lines
+if v:version > 703 || v:version == 703 && has("patch541")
+  set formatoptions+=j
+endif
+
+" Don't scan included files for autocomplete (slow)
+set complete-=i
+
+" Treat numbers with leading zeros as decimal, not octal
+set nrformats-=octal
+
+" Make escape key more responsive (100ms timeout for key codes)
+if !has('nvim') && &ttimeoutlen == -1
+  set ttimeout
+  set ttimeoutlen=100
+endif
+
+" =============================================================================
+" HISTORY & PERSISTENCE
+" =============================================================================
+
+" Remember 1000 commands and search history
+set history=1000
+
+" Auto-reload files changed outside Vim (if not modified in Vim)
+set autoread
+
+" Save global variables (g:UPPERCASE) in viminfo
+if !empty(&viminfo)
+  set viminfo^=!
+endif
+
+" Don't save options in session files (prevents conflicts with vimrc)
+set sessionoptions-=options
+
+" Don't save options in view files
+set viewoptions-=options
+
+" Maximum number of tab pages opened with -p argument
+set tabpagemax=50
+
+" =============================================================================
+" KEY BINDINGS
+" =============================================================================
+
+" Set Leader to space
+let mapleader = " "
+
+" Clear search highlighting with Ctrl-L (also redraws screen)
+if maparg('<C-L>', 'n') ==# ''
+  nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L>
+endif
+
+" Make Ctrl-U and Ctrl-W create undo break points in insert mode
+if empty(mapcheck('<C-U>', 'i'))
+  inoremap <C-U> <C-G>u<C-U>
+endif
+if empty(mapcheck('<C-W>', 'i'))
+  inoremap <C-W> <C-G>u<C-W>
+endif
+
+" Map Option-RightArrow and Option-LeftArrow on macOS to forward/backward word
+nnoremap <Esc>[1;9C w
+vnoremap <Esc>[1;9C w
+inoremap <Esc>[1;9C <Esc>w
+nnoremap <Esc>[1;9D b
+vnoremap <Esc>[1;9D b
+inoremap <Esc>[1;9D <Esc>b
+
+" Surround word under cursor with various characters
+nnoremap <Leader>* ciw*<C-r>"*<Esc>
+nnoremap <Leader>" ciw"<C-r>""<Esc>
+nnoremap <Leader>' ciw'<C-r>"'<Esc>
+nnoremap <Leader>_ ciw_<C-r>"_<Esc>
+nnoremap <Leader>( ciw(<C-r>")<Esc>
+nnoremap <Leader>[ ciw[<C-r>"]<Esc>
+nnoremap <Leader>{ ciw{<C-r>"}<Esc>
+
+" Toggle paste mode to prevent auto-indentation when pasting
+set pastetoggle=<F2>
+
+" Readline-like bindings for command mode
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+
+" =============================================================================
+" FUNCTIONS & COMMANDS
+" =============================================================================
+
+" Auto-pair brackets, braces, and parentheses intelligently
+function! ConditionalPairMap(open, close) abort
+    let line = getline('.')
+    let col = col('.')
+    if col < col('$') || stridx(line, a:close, col + 1) != -1
+        return a:open
+    else
+        return a:open . a:close . repeat("\<left>", len(a:close))
+    endif
+endfunction
+inoremap <expr> ( ConditionalPairMap('(', ')')
+inoremap <expr> { ConditionalPairMap('{', '}')
+inoremap <expr> [ ConditionalPairMap('[', ']')
+
+" Diff current buffer against saved file
+if exists(":DiffOrig") != 2
+  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_
+        \ | diffthis | wincmd p | diffthis
+endif
+
+" =============================================================================
+" PLUGINS & EXTENSIONS
+" =============================================================================
+
+" Improve shell script syntax highlighting (use POSIX)
+if !exists('g:is_posix') && !exists('g:is_bash') && !exists('g:is_kornshell') && !exists('g:is_dash')
+  let g:is_posix = 1
+endif
+
+" Load matchit plugin for enhanced % matching
+if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
+  runtime! macros/matchit.vim
+endif
+
+" Enable :Man command for reading man pages in Vim
+if exists(':Man') != 2 && !exists('g:loaded_man') && &filetype !=? 'man' && !has('nvim')
+  runtime ftplugin/man.vim
+endif
