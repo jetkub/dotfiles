@@ -55,6 +55,9 @@ fi
 
 # Initialize completions
 autoload -Uz compinit && compinit
+# Load bash completion compatibility (for tools that only provide bash completions)
+autoload -Uz bashcompinit && bashcompinit
+
 
 # Load configuration modules
 source "$ZDOTDIR/zsh_completions"

@@ -85,5 +85,3 @@ if (( $+commands[az] )) && [[ -v WSL_DISTRO_NAME ]]; then
     source /etc/bash_completion.d/azure-cli
 fi
 
-# Load bash completion compatibility (for tools that only provide bash completions)
-autoload -U +X bashcompinit && bashcompinit
