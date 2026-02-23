@@ -39,4 +39,7 @@ if [[ -v WSL_DISTRO_NAME ]]; then
     WINUSER=$(cmd.exe /c echo %username% 2>/dev/null | tr -d '\r\n')
     USERS_MOUNT="/mnt/c/Users/$WINUSER"
     sudo mount -t drvfs "C:/Users/$WINUSER" "$USERS_MOUNT" >/dev/null 2>&1
+
+    # env vars
+    export MY_SCRATCH="/mnt/h/Notes/Scratch"
 fi
