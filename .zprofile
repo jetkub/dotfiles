@@ -35,7 +35,7 @@ if [[ -z "$ZPROFILE_LOADED" ]]; then
   esac
 
   # Common PATH additions for all platforms
-  [[ -d "$HOME/bin" ]] && export PATH="$PATH:$HOME/bin"
+  [[ -d "$HOME/bin" ]] && export PATH="$HOME/bin:$PATH"
   [[ -n "$GOPATH" && -d "$GOPATH/bin" ]] && export PATH="$PATH:$GOPATH/bin"
 
   # SSH agent setup (only for login shells)
