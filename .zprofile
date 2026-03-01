@@ -35,6 +35,7 @@ if [[ -z "$ZPROFILE_LOADED" ]]; then
   esac
 
   # Common PATH additions for all platforms
+  [[ -d "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
   [[ -d "$HOME/bin" ]] && export PATH="$HOME/bin:$PATH"
   [[ -n "$GOPATH" && -d "$GOPATH/bin" ]] && export PATH="$PATH:$GOPATH/bin"
 
