@@ -22,9 +22,6 @@ set laststatus=2
 " Show cursor position in status line
 set ruler
 
-" Enhanced command-line completion menu
-set wildmenu
-
 " Keep 5 lines visible above/below cursor when scrolling
 set scrolloff=5
 
@@ -50,7 +47,11 @@ set mouse=a
 
 " Color scheme
 set background=dark
-colorscheme jellybeans
+if v:version >= 902
+    colorscheme catppuccin
+else
+    colorscheme jellybeans
+endif
 
 " Enable syntax highlighting
 syntax enable
@@ -86,24 +87,34 @@ set shiftwidth=4
 set tabstop=4
 
 " Delete comment leader when joining commented lines
-if v:version > 703 || v:version == 703 && has("patch541")
-  set formatoptions+=j
-endif
+set formatoptions+=j
 
 " Don't scan included files for autocomplete (slow)
 set complete-=i
 
-" Improve auto-completion
-set completeopt=menu,menuone,noselect
-set completeopt+=noinsert  " Don't insert text until selection is made
-
-" Make Enter select completion instead of inserting newline
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
-
-" Use Tab/S-Tab to navigate
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
+if v:version >= 902
+    " Vim 9.2+: Use popup menu and let plugins handle mappings
+    set completeopt=menuone,popup,noselect
+    set completeopt+=noinsert  " Don't insert text until selection is made
+    set infercase              " Smart case matching 
+    set wildmode=noselect:lastused,full
+    set wildoptions=pum
+    set wildcharm=<C-@>
+else
+    " Older Vim
+    " Basic completion auto-completion improvements
+	set completeopt=menu,menuone
+	set completeopt+=noinsert 
+	set wildmenu " Command line completion menu 
+	
+    " Make Enter select completion instead of inserting newline
+    inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+    
+    " Use Tab/S-Tab to navigate
+    inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+endif
+    
 " Treat numbers with leading zeros as decimal, not octal
 set nrformats-=octal
 
