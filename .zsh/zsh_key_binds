@@ -36,6 +36,14 @@ if [[ "$LC_TERMINAL" == "iTerm2" ]]; then
   bindkey "^[[1;9D" backward-word  # Option+Left
 fi
 
+# WSL-specific
+if [[ -v  WSL_DISTRO_NAME ]]; then
+	bindkey "^[[1;5C" forward-word
+	bindkey "^[[1;5D" backward-word
+	bindkey "^[[1;3C" forward-word
+	bindkey "^[[1;3D" backward-word
+fi
+
 # Useful editing commands
 ## Ctrl+r - reverse history search
 bindkey '^r' history-incremental-search-backward  
