@@ -33,8 +33,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   export MY_BBEDIT_SCRIPTS="$HOME/Library/Mobile Documents/iCloud~com~barebones~bbedit/Documents/Application Support/Scripts"
 fi
 
-# wsl-specific
-if [[ -v WSL_DISTRO_NAME ]]; then
+# wsl-specific (work PC)
+if [[ -v WSL_DISTRO_NAME ]] && [[ "$HOSTNAME" == *AIW* ]]; then
     # fix Users mount breaking after montly recompose at work
     WINUSER=$(cmd.exe /c echo %username% 2>/dev/null | tr -d '\r\n')
     USERS_MOUNT="/mnt/c/Users/$WINUSER"
