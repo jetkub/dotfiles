@@ -1,6 +1,6 @@
-if v:version < 902
-    finish
-endif
+"if v:version < 902
+"    finish
+"endif
 vim9script
 
 def InsComplete()

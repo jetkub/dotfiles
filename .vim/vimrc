@@ -47,11 +47,8 @@ set mouse=a
 
 " Color scheme
 set background=dark
-if v:version >= 902
-    colorscheme catppuccin
-else
-    colorscheme jellybeans
-endif
+colorscheme jellybeans
+"colorscheme catppuccin
 
 " Enable syntax highlighting
 syntax enable

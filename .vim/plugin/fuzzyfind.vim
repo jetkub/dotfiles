@@ -1,6 +1,6 @@
-if v:version < 902
-    finish
-endif
+"if v:version < 902
+"    finish
+"endif
 vim9script
 
 var selected_match = null_string
@@ -23,7 +23,7 @@ def GrepComplete(arglead: string, cmdline: string, cursorpos: number): list<any>
 
     if executable('rg')
         return systemlist($'rg --hidden --vimgrep'
-            .. $' --max-depth 10 -S "{arglead} {root}" | head -200')
+            .. $' --max-depth 10 -S "{arglead}" {root} | head -200')
     else
         var cmd = $'grep -REIHnsi "{arglead}" --exclude-dir=.git'
             .. $' --exclude="tags" --exclude="*.swap" {root}'
@@ -83,12 +83,12 @@ command! -nargs=* -complete=customlist,FuzzyFind Find exe !empty(selected_match)
 
 nnoremap <leader>g :Grep<space>
 nnoremap <leader>G :Grep <c-r>=expand("<cword>")<cr>
-nnoremap <leader>gz :let g:grep_root = "~/.zshrc ~/.zshenv ~/.zprofile ~/.zsh"<cr>:Grep<space>
+nnoremap <leader>gz :<c-r>=execute('let g:grep_root = "$HOME/.zshrc $HOME/.zshenv $HOME/.zprofile $HOME/.zsh/zsh_key_binds $HOME/.zsh/zsh_completions $HOME/.zsh/zsh_aliases"')\|''<cr>Grep<space>
 
 nnoremap <leader><space> :<c-r>=execute('let fzfind_root="."')\|''<cr>Find<space><c-@>
 nnoremap <leader>fv :<c-r>=execute('let fzfind_root="$HOME/.vim"')\|''<cr>Find<space><c-@>
 nnoremap <leader>fV :<c-r>=execute('let fzfind_root="$VIMRUNTIME"')\|''<cr>Find<space><c-@>
 nnoremap <leader><bs> :Buffer <c-@>
 
-autocmd CmdlineEnter : allfiles = null_list
-autocmd CmdlineLeavePre : SelectItem()
+autocmd CmdlineEnter : allfiles = null_list | g:grep_root = '.'
+autocmd CmdlineLeavePre : SelectItem() 
