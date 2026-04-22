@@ -1,7 +1,8 @@
-"if v:version < 902
-"    finish
-"endif
 vim9script
+
+if !has('patch-9.1.1329')
+    finish
+endif
 
 var selected_match = null_string
 var allfiles: list<string>
