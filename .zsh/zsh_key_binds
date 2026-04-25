@@ -29,20 +29,18 @@ bindkey "^[[3~" delete-char
 # [Ctrl-Delete] - delete whole forward-word
 bindkey '^[[3;5~' kill-word
 
-# macOS-specific (really, iTerm2 specific)
-# set Option+Arrow keys to jump by word if I'm connected with iTerm2
+# iTerm2 specific setting
+# set Option+Arrow keys to jump by word if 
+# Profiles > Keys > Key Behavior: Opt = Meta
 if [[ "$LC_TERMINAL" == "iTerm2" ]]; then
   bindkey "^[[1;9C" forward-word   # Option+Right
   bindkey "^[[1;9D" backward-word  # Option+Left
 fi
 
-# WSL-specific
-if [[ -v  WSL_DISTRO_NAME ]]; then
-	bindkey "^[[1;5C" forward-word
-	bindkey "^[[1;5D" backward-word
-	bindkey "^[[1;3C" forward-word
-	bindkey "^[[1;3D" backward-word
-fi
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+bindkey "^[[1;3C" forward-word
+bindkey "^[[1;3D" backward-word
 
 # Useful editing commands
 ## Ctrl+r - reverse history search
