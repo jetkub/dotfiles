@@ -71,135 +71,26 @@ if [[ "$LC_TERMINAL" == "iTerm2" ]]; then
     [[ -f "$HOME/.iterm2_shell_integration.zsh" ]] && source "$HOME/.iterm2_shell_integration.zsh"
 fi
 
-# Functions for interactive sessions
+# Load universal functions
 z_ed_rc()      { $EDITOR ~/.zshrc; }
 z_ed_env()     { $EDITOR ~/.zshenv; }
 z_ed_profile() { $EDITOR ~/.zprofile; }
 z_ed_alias()   { $EDITOR ~/.zsh/zsh_aliases; }
 z_ed_kb()      { $EDITOR ~/.zsh/zsh_key_binds; }
 
-z_reload_shell() {
-    echo "Reloading zsh configuration..."
-    source ~/.zshenv
-    [[ -f ~/.zprofile ]] && source ~/.zprofile
-    source ~/.zshrc
-    # rebuild command completion hash table
-    rehash
-    echo "Done."
-}
+source ~/.zsh/functions/common.zsh
 
-extract_tar() {
-    if [ -f "$1" ]; then
-        dirname="${1%%.*}"
-        mkdir -p "$dirname"
-        tar -xf "$1" -C "$dirname"
-        echo "Extracted $1 to $dirname/"
-    else
-        echo "File not found: $1"
-    fi
-}
-
-z_search_conf() {
-    if [ -z "$1" ]; then
-        echo "Usage: $0 <search_pattern>"
-        return 1
-    fi
-
-    # Search for the pattern and color the output
-    grep -irn --color=always "$1" ~/.zshenv ~/.zshrc ~/.zprofile ~/.zsh/zsh* |
-    grep -Ev "brew_formulae|zsh_history"
-}
-
-# overwrite rsync to exclude macOS cruft
-rsync() {
-    local exclude_file="$HOME/.rsync/exclude"
-    if [[ -f "$exclude_file" ]]; then
-        command rsync --exclude-from="$exclude_file" "$@"
-    else
-        command rsync --exclude=.DS_Store "$@"
-    fi
-}
-
-get_bundleid() {
-    case "$OSTYPE" in
-        darwin*)
-            osascript -e "id of app \"$1\"" ;;
-        *)
-            echo "Unsupported OS" >&2
-            return 1 ;;
-    esac
-}
-
-bin_script() {
-    if [ -z "$1" ]; then
-        echo "Usage: $0 <search_pattern>"
-        return 1
-    fi
-    cp -f "$1" "$HOME/bin"
-    echo "Deployed $1 to ~/bin"
-}
-
-print_term_col() {
-	for i in {0..255}; do
-		print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$'\n'}
-	done
-}
-
-# Use subl (Sublime Text cli) from WSL on Windows
-if [[ -v WSL_DISTRO_NAME ]]; then
-
-    _SUBL_PATHS=(
-        "/mnt/c/Program Files/Sublime Text/subl.exe"
-        "/mnt/c/Program Files (x86)/Sublime Text/subl.exe"
-    )
-    for _p in "${_SUBL_PATHS[@]}"; do
-        # if exists and executable, set _SUBL_EXE to path of subl.exe
-        if [[ -x "$_p" ]]; then
-            _SUBL_EXE="$_p"
-            break
-        fi
-    done
-    # clean up
-    unset _p _SUBL_PATHS
-
-    subl() {
-        if [[ -z "$_SUBL_EXE" ]]; then
-            echo "subl: Sublime Text executable not found" >&2
-            return 1
-        fi
-        local ARGS=()
-        for ARG in "$@"; do
-            if [[ "$ARG" == -* ]]; then
-                ARGS+=("$ARG")
-            else
-                ARGS+=("$(wslpath -a -w "$ARG")")
-            fi
-        done
-        "$_SUBL_EXE" "${ARGS[@]}"
-    }
-
-    # Run Windows Programs (.exe) from WSL as Fallback without extension
-    command_not_found_handler() {
-        local cmd=$1
-        shift
-
-        # Search PATH for .exe, .com, or .bat versions
-        local dir
-        for dir in ${(s/:/)PATH}; do
-            for ext in exe com bat; do
-                if [[ -x "$dir/$cmd.$ext" ]]; then
-                    "$dir/$cmd.$ext" "$@"
-                    return $?
-                fi
-            done
-        done
-
-        # Fall back to default "command not found" message
-        echo "zsh: command not found: $cmd" >&2
-        return 127
-    }
+# Load macOS-specific functions
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  source ~/.zsh/functions/macos.zsh
 fi
 
+# Load WSL-specific functions
+if [[ -v WSL_DISTRO_NAME ]]; then
+  source ~/.zsh/functions/wsl.zsh
+fi
+
+# Prompt benchmarking. Uncomment PROMPT_TIMING to use.
 if [[ -v PROMPT_TIMING ]]; then
     # End timing and display
     PROMPT_END_TIME=$(($(date +%s%N)/1000000)) # DEBUG
