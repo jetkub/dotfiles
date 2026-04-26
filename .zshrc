@@ -78,16 +78,16 @@ z_ed_profile() { $EDITOR ~/.zprofile; }
 z_ed_alias()   { $EDITOR ~/.zsh/zsh_aliases; }
 z_ed_kb()      { $EDITOR ~/.zsh/zsh_key_binds; }
 
-source ~/.zsh/functions/common.zsh
+source ~/.zsh/zsh_functions/common.zsh
 
 # Load macOS-specific functions
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  source ~/.zsh/functions/macos.zsh
+  source ~/.zsh/zsh_functions/macos.zsh
 fi
 
 # Load WSL-specific functions
 if [[ -v WSL_DISTRO_NAME ]]; then
-  source ~/.zsh/functions/wsl.zsh
+  source ~/.zsh/zsh_functions/wsl.zsh
 fi
 
 # Prompt benchmarking. Uncomment PROMPT_TIMING to use.
