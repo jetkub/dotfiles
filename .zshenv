@@ -40,7 +40,7 @@ if [[ "$OSTYPE" == "linux"* ]]; then
 fi
 
 # wsl-specific (work PC)
-if [[ -v WSL_DISTRO_NAME ]] && [[ "$HOSTNAME" == *AIW* ]]; then
+if [[ -v WSL_DISTRO_NAME ]] && [[ "$HOST" == *AIW* ]]; then
     # fix Users mount breaking after montly recompose at work
     WINUSER=$(cmd.exe /c echo %username% 2>/dev/null | tr -d '\r\n')
     USERS_MOUNT="/mnt/c/Users/$WINUSER"
