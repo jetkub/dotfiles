@@ -91,10 +91,10 @@ set complete-=i
 
 if v:version >= 902
     " Vim 9.2+: Use popup menu and let plugins handle mappings
-    set completeopt=menuone,popup,noselect
-    set completeopt+=noinsert  " Don't insert text until selection is made
+    set completeopt=menuone,popup,noinsert
     set infercase              " Smart case matching 
-    set wildmode=noselect:lastused,full
+"    set wildmode=noselect:lastused,full
+    set wildmode=full
     set wildoptions=pum
     set wildcharm=<C-@>
 else
