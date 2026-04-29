@@ -12,7 +12,7 @@ export GOPATH="$HOME/go"
 
 # Set preferred editor
 case "$OSTYPE" in
-  darwin*) export EDITOR="vim" ;;
+  darwin*) export EDITOR="nvim" ;;
   linux*)
     if command -v nvim >/dev/null 2>&1; then
       export EDITOR="nvim"
