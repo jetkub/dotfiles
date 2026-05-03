@@ -79,6 +79,7 @@ z_ed_alias()   { $EDITOR ~/.zsh/zsh_aliases; }
 z_ed_kb()      { $EDITOR ~/.zsh/zsh_key_binds; }
 
 source ~/.zsh/zsh_functions/common.zsh
+source ~/.zsh/zsh_functions/mdf-helpers.zsh
 
 # Load macOS-specific functions
 if [[ "$OSTYPE" == "darwin"* ]]; then
