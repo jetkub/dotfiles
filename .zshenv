@@ -23,10 +23,14 @@ case "$OSTYPE" in
     fi ;;
 esac
 
+# Common env vars
+export NVIM_CFG="$XDG_CONFIG_HOME/nvim"
+
 # macOS-specific
 if [[ "$OSTYPE" == "darwin"* ]]; then
   export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
   export LIMA_HOME="$HOME/.lima"
+  export MY_PROJECTS="$HOME/Desktop/Projects"
   export MY_NOTES="$HOME/Desktop/Resources/Notes"
   export MY_SCRIPTS="$HOME/Desktop/Projects/Scripts"
   export MY_SCRIPTEDITOR_DIR="$HOME/Library/Mobile Documents/com~apple~ScriptEditor2/Documents"
@@ -47,5 +51,5 @@ if [[ -v WSL_DISTRO_NAME ]] && [[ "$HOST" == *AIW* ]]; then
     sudo mount -t drvfs "C:/Users/$WINUSER" "$USERS_MOUNT" >/dev/null 2>&1
 
     # env vars
-    export MY_SCRATCH="/mnt/h/Notes/Scratch"
+    export MY_NOTES="/mnt/h/Notes"
 fi
