@@ -1,6 +1,21 @@
 -- LOAD CONFIG
 -- require("")
 
+require("jellybeans").setup({
+  transparent = false,
+  italics     = true,
+  bold        = true,
+  flat_ui     = false,
+  background = {
+      dark  = "jellybeans",
+      light = "jellybeans-light"
+  },
+  plugins = {
+    all  = false,
+    auto = true,
+  }
+})
+
 -- =============================================================================
 -- OPTIONS
 -- =============================================================================
@@ -19,7 +34,7 @@ vim.opt.number        = true
 vim.opt.linebreak     = true
 
 -- Colors 
-vim.cmd.colorscheme('jellybeans')
+vim.cmd.colorscheme('jellybeans-default')
 
 -- Invisible characters shown with :set list
 vim.opt.listchars = { tab = "▸ ", eol = "¬", space = "·", trail = "~", extends = ">", precedes = "<" }
@@ -78,22 +93,25 @@ vim.keymap.set('c', '<C-e>', '<End>',  { noremap = true })
 vim.keymap.set('c', '<C-p>', '<Up>',   { noremap = true })
 vim.keymap.set('c', '<C-n>', '<Down>', { noremap = true })
 
--- Delete only whitespace before cursor up to but not including preceding word
+-- Delete only whitespace before cursor up to but not including preceding word.
+-- If there is only a single space before the cursor, behave like Ctrl+W
+-- (delete the space + the preceding word) so you don't have to press twice.
 local function SmartBackspace()
   local col = vim.fn.col('.') - 1
   local line = vim.fn.getline('.')
   local before = line:sub(1, col)
 
-  if before:match('%s+$') then
-    -- There's whitespace before cursor: delete only the whitespace
-    local spaces = before:match('%s+$')
+  local spaces = before:match('%s+$')
+
+  if spaces and #spaces > 1 then
+    -- Multiple whitespace chars before cursor: delete only the whitespace
     for _ = 1, #spaces do
       vim.api.nvim_feedkeys(
         vim.api.nvim_replace_termcodes('<BS>', true, false, true), 'n', false
       )
     end
   else
-    -- No whitespace: delete the previous word (like Ctrl+W)
+    -- No whitespace, or exactly one space: delete the previous word (like Ctrl+W)
     vim.api.nvim_feedkeys(
       vim.api.nvim_replace_termcodes('<C-W>', true, false, true), 'n', false
     )
