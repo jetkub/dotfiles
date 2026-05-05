@@ -79,7 +79,7 @@ vim.opt.pumheight    = 10
 -- again in the future; see if anything changes with fuzzy matching algorithm.
 -- vim.opt.completeopt  = "fuzzy,menuone,noselect,popup"
 
-vim.opt.completeopt  = "menuone,popup"
+vim.opt.completeopt  = "menuone,noinsert,popup"
 vim.opt.autocomplete = true 
 -- vim.opt.completeopt  = "menuone,noinsert,popup"
 -- vim.opt.autocomplete = false 
@@ -92,6 +92,23 @@ vim.opt.wildoptions = "fuzzy,pum"
 -- sort by most recent for buffers
 -- Second <Tab>: trigger completion popup, don't pre-select first item in list
 vim.opt.wildmode    = "longest:lastused,full:noselect"
+
+-- Swap Up/Down and Left/Right in wildmenu to match Vim behavior
+-- Up/Down = scroll items; Left/Right = navigate directory paths
+vim.api.nvim_set_keymap('c', '<Up>',    'wildmenumode() ? "<Left>"  : "<Up>"',    { expr = true, noremap = true })
+vim.api.nvim_set_keymap('c', '<Down>',  'wildmenumode() ? "<Right>" : "<Down>"',  { expr = true, noremap = true })
+vim.api.nvim_set_keymap('c', '<Left>',  'wildmenumode() ? "<Up>"    : "<Left>"',  { expr = true, noremap = true })
+vim.api.nvim_set_keymap('c', '<Right>', 'wildmenumode() ? "<Down>"  : "<Right>"', { expr = true, noremap = true })
+
+-- C-n/C-p navigate wildmenu when visible, otherwise scroll prefix-filtered history
+vim.api.nvim_set_keymap('c', '<C-p>', 'pumvisible() ? "<C-p>" : "<Up>"',   { expr = true, noremap = true })
+vim.api.nvim_set_keymap('c', '<C-n>', 'pumvisible() ? "<C-n>" : "<Down>"', { expr = true, noremap = true })
+
+-- Readline-style command line
+-- C-a: insert all matches if wildmenu visible, otherwise go to Home
+vim.api.nvim_set_keymap('c', '<C-a>', 'pumvisible() ? "<C-a>" : "<Home>"', { expr = true, noremap = true })
+-- C-e: close wildmenu if visible, otherwise go to End of line
+vim.api.nvim_set_keymap('c', '<C-e>', 'pumvisible() ? "<C-e>" : "<End>"', { expr = true, noremap = true })
 
 -- =============================================================================
 -- KEYMAPS
@@ -119,12 +136,6 @@ vim.keymap.set('n', '<Leader>_', 'ciw_<C-r>"_<Esc>', { noremap = true })
 vim.keymap.set('n', '<Leader>(', 'ciw(<C-r>")<Esc>', { noremap = true })
 vim.keymap.set('n', '<Leader>[', 'ciw[<C-r>"]<Esc>', { noremap = true })
 vim.keymap.set('n', '<Leader>{', 'ciw{<C-r>"}<Esc>', { noremap = true })
-
--- Readline-style command line
-vim.keymap.set('c', '<C-a>', '<Home>', { noremap = true })
-vim.keymap.set('c', '<C-e>', '<End>',  { noremap = true })
-vim.keymap.set('c', '<C-p>', '<Up>',   { noremap = true })
-vim.keymap.set('c', '<C-n>', '<Down>', { noremap = true })
 
 -- Delete only whitespace before cursor up to but not including preceding word.
 -- If there is only a single space before the cursor, behave like Ctrl+W
