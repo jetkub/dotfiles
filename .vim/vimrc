@@ -1,100 +1,56 @@
 " =============================================================================
-" GENERAL SETTINGS
+" SETTINGS
 " =============================================================================
-
-" Disable vi compatibility
-set nocompatible
-
-" Enable file type detection, plugins, and indent rules
 filetype plugin indent on
-
-
-" =============================================================================
-" DISPLAY & UI
-" =============================================================================
-
-" Show line numbers
+set nocompatible
 set number
-
-" Always show status line
 set laststatus=2
-
-" Show cursor position in status line
 set ruler
-
-" Keep 5 lines visible above/below cursor when scrolling
 set scrolloff=5
-
-" Smooth horizontal scrolling, 2 columns of context
 set sidescroll=1
 set sidescrolloff=2
-
-" Show as much of long lines as possible instead of @@@
 set display+=lastline
-
-" Show @@@ in last column for truncated lines
 set display+=truncate
-
-" Define how invisible characters appear with :set list
 set listchars=tab:▸\ ,eol:¬,space:·,trail:~,extends:>,precedes:<
 
-" Enable 256 color support
 set term=xterm-256color
 set t_Co=256
 
-" Enable mouse support in all modes
 set mouse=a
-
-" Color scheme
 set background=dark
+
+syntax enable
 colorscheme jellybeans
 "colorscheme catppuccin
-
-" Enable syntax highlighting
-syntax enable
-
-
-" =============================================================================
-" SEARCH
-" =============================================================================
-
-" Show matches incrementally as you type
 set incsearch
-
-" Highlight all search matches
 set hlsearch
 
-" =============================================================================
-" EDITING BEHAVIOR
-" =============================================================================
-
-" Allow backspace over indentation, line breaks, and insert start
 set backspace=indent,eol,start
-
-" Tab inserts shiftwidth spaces at line start
 set smarttab
-
-" Use spaces instead of tabs
 set expandtab
-
-" Number of spaces for each indentation level
 set shiftwidth=4
-
-" Number of spaces that a tab character displays as
 set tabstop=4
-
-" Delete comment leader when joining commented lines
 set formatoptions+=j
+
+set history=1000
+set autoread
+set sessionoptions-=options
+set viewoptions-=options
+set tabpagemax=50
 
 " Don't scan included files for autocomplete (slow)
 set complete-=i
+
+" Treat numbers with leading zeros as decimal, not octal
+set nrformats-=octal
 
 if v:version >= 902
     " Vim 9.2+: Use popup menu and let plugins handle mappings
     set completeopt=menuone,popup,noinsert
     set infercase              " Smart case matching 
-"    set wildmode=noselect:lastused,full
-    set wildmode=full
+    " set wildmode=noselect:lastused,full
+    set wildmode=longest:lastused,full:noselect
+    "set wildmode=full
     set wildoptions=pum
     set wildcharm=<C-@>
 else
@@ -112,44 +68,22 @@ else
     inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 endif
     
-" Treat numbers with leading zeros as decimal, not octal
-set nrformats-=octal
-
 " Make escape key more responsive (100ms timeout for key codes)
 if !has('nvim') && &ttimeoutlen == -1
   set ttimeout
   set ttimeoutlen=100
 endif
 
-" =============================================================================
-" HISTORY & PERSISTENCE
-" =============================================================================
-
-" Remember 1000 commands and search history
-set history=1000
-
-" Auto-reload files changed outside Vim (if not modified in Vim)
-set autoread
-
 " Save global variables (g:UPPERCASE) in viminfo
 if !empty(&viminfo)
   set viminfo^=!
 endif
 
-" Don't save options in session files (prevents conflicts with vimrc)
-set sessionoptions-=options
-
-" Don't save options in view files
-set viewoptions-=options
-
-" Maximum number of tab pages opened with -p argument
-set tabpagemax=50
 
 " =============================================================================
 " KEY BINDINGS
 " =============================================================================
 
-" Set Leader to space
 let mapleader = " "
 
 " Clear search highlighting with Ctrl-L (also redraws screen)
@@ -165,15 +99,6 @@ if empty(mapcheck('<C-W>', 'i'))
   inoremap <C-W> <C-G>u<C-W>
 endif
 
-" Map Option-RightArrow and Option-LeftArrow on macOS to forward/backward word
-nnoremap <Esc>[1;9C w
-vnoremap <Esc>[1;9C w
-inoremap <Esc>[1;9C <Esc>w
-nnoremap <Esc>[1;9D b
-vnoremap <Esc>[1;9D b
-inoremap <Esc>[1;9D <Esc>b
-
-" Surround word under cursor with various characters
 nnoremap <Leader>* ciw*<C-r>"*<Esc>
 nnoremap <Leader>" ciw"<C-r>""<Esc>
 nnoremap <Leader>' ciw'<C-r>"'<Esc>
