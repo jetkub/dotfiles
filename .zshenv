@@ -41,6 +41,10 @@ fi
 if [[ "$OSTYPE" == "linux"* ]]; then
     # fix systemd pager scrollback issues
     export SYSTEMD_LESS=FRSMK
+
+    if [[ -d "/opt/nvim-linux-x86_64" ]]; then
+        export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+    fi
 fi
 
 # wsl-specific (work PC)
