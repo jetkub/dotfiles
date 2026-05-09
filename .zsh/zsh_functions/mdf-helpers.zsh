@@ -17,7 +17,7 @@ _mdf-subtree-add() {
   echo "-> Adding subtree at ${prefix}"
   # subtree resolves prefix relative to working tree root; must be in $HOME
   (cd "$HOME" && mdf subtree add --prefix "$prefix" "$remote" "$branch" --squash)
-  if (( $? == 0 )) ; then
+  if ! (( $? == 0 )) ; then
     echo "-> Subtree add failed. Rolling back remote ${remote}"
     mdf remote remove "$remote"
     return 1
