@@ -1,1 +1,2 @@
+jellybeans.nvim https://github.com/WTFox/jellybeans.nvim main
 mini.surround https://github.com/nvim-mini/mini.surround main
