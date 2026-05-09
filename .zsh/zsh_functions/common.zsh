@@ -41,9 +41,10 @@ rsync() {
 }
  
 bin_script() {
+    local func_name="$0"
     _bin_script_usage() {
-        echo "Moves a script to \$HOME/bin"
-        echo "  Usage: $0 <path/to/script>"
+        echo "Moves script to \$HOME/bin"
+        echo "  Usage: $func_name <path/to/script>"
     }
 
     if [[ "$1" == "-h" || "$1" == "--help" ]]; then
