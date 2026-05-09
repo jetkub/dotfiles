@@ -15,7 +15,13 @@ _mdf-subtree-add() {
   mdf remote add -f "$remote" "$url"
 
   echo "-> Adding subtree at ${prefix}"
-  mdf subtree add --prefix "$prefix" "$remote" "$branch" --squash
+  # subtree resolves prefix relative to working tree root; must be in $HOME
+  (cd "$HOME" && mdf subtree add --prefix "$prefix" "$remote" "$branch" --squash)
+  if (( $? == 0 )) ; then
+    echo "-> Subtree add failed. Rolling back remote ${remote}"
+    mdf remote remove "$remote"
+    return 1
+  fi
 
   # Store the branch in git config so update-all can read it later
   mdf config "subtree.${remote}.branch" "$branch"
@@ -29,7 +35,7 @@ _mdf-subtree-update() {
   branch="${branch:-main}"
 
   echo "-> Pulling updates for ${remote} (branch: ${branch})"
-  mdf subtree pull --prefix "$prefix" "$remote" "$branch" --squash
+  (cd "$HOME" && mdf subtree pull --prefix "$prefix" "$remote" "$branch" --squash)
 }
 
 _mdf-subtree-remove() {
