@@ -41,10 +41,21 @@ rsync() {
 }
  
 bin_script() {
-    if [ -z "$1" ]; then
-        echo "Usage: $0 <search_pattern>"
+    _bin_script_usage() {
+        echo "Moves a script to \$HOME/bin"
+        echo "  Usage: $0 <path/to/script>"
+    }
+
+    if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+        _bin_script_usage
+        return 0
+    fi
+
+    if [[ -z "$1" ]]; then
+        _bin_script_usage >&2
         return 1
     fi
+
     cp -f "$1" "$HOME/bin"
     echo "Deployed $1 to ~/bin"
 }
