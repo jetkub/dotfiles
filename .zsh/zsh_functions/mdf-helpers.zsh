@@ -9,7 +9,7 @@ _mdf-subtree-add() {
   local remote="$1"
   local prefix="$2"
   local url="$3"
-  local branch="${4:-main}" # Optional -- default to main.
+  local branch="${4:-main}"
 
   echo "-> Adding remote ${remote} -> ${url}"
   mdf remote add -f "$remote" "$url"
@@ -58,6 +58,7 @@ mdf-nvim-add() {
   local branch="${3:-main}"
   local remote="nvim/${name}"
   local prefix=".config/nvim/pack/plugins/start/${name}"
+  local manifest="$HOME/.config/nvim/pack/plugins/plugins.txt"
 
   if [[ -z "$name" || -z "$url" ]]; then
     echo "Usage: mdf-nvim-add <plugin-name> <github-url> [branch]"
@@ -75,7 +76,13 @@ mdf-nvim-add() {
   fi
 
   _mdf-subtree-add "$remote" "$prefix" "$url" "$branch"
+
+  # Record in manifest for portability
+  echo "${name} ${url} ${branch}" >> "$manifest"
+  mdf add "$manifest"
+  mdf commit --amend --no-edit  # fold into the subtree merge commit
 }
+
 # Usage: mdf-nvim-update <plugin-name> 
 mdf-nvim-update() {
   local name="$1"
@@ -117,6 +124,7 @@ mdf-nvim-remove() {
   local name="$1"
   local remote="nvim/${name}"
   local prefix=".config/nvim/pack/plugins/start/${name}"
+  local manifest="$HOME/.config/nvim/pack/plugins/plugins.txt"
 
   if [[ -z "$name" ]]; then
     echo "Usage: mdf-nvim-remove <plugin-name>"
@@ -129,7 +137,33 @@ mdf-nvim-remove() {
   fi
 
   _mdf-subtree-remove "$remote" "$prefix"
+
+  # remove from nvim plugins manifest
+  sed -i "/^${name} /d" "$manifest"
+  mdf add "$manifest"
+  mdf commit --amend --no-edit
 }
+
+mdf-nvim-restore() {
+  local manifest="$HOME/.config/nvim/pack/plugins/plugins.txt"
+
+  if [[ ! -f "$manifest" ]]; then
+    echo "Error: no manifest found at ${manifest}"
+    return 1
+  fi
+
+  while read -r name url branch; do
+    local remote="nvim/${name}"
+    if mdf remote get-url "$remote" &>/dev/null; then
+      echo "-> ${name} already registered, skipping"
+      continue
+    fi
+    echo "-> Restoring ${name} from ${url} (${branch})"
+    mdf remote add -f "$remote" "$url"
+    mdf config "subtree.${remote}.branch" "$branch"
+  done < "$manifest"
+}
+
 
 # List managed nvim plugins
 # alias mdf-nvim-list="mdf remote -v | grep '^nvim/' | grep '(fetch)' | awk '{print \$1, \$2}'"
