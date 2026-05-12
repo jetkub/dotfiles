@@ -1,5 +1,6 @@
 -- LOAD CONFIG
 -- require("")
+require('mini.surround').setup()
 
 require("jellybeans").setup({
   transparent = false,
