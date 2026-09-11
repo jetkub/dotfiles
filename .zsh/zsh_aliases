@@ -2,6 +2,9 @@
 alias ls="ls --color=auto"
 alias ll="ls -halF"
 
+# preserve aliases when using sudo
+alias sudo='sudo '
+
 alias split_path="echo $PATH | tr ':' '\n'"
 
 command -v vim >/dev/null && alias vi="vim"
