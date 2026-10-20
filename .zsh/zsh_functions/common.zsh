@@ -39,7 +39,7 @@ rsync() {
         command rsync --exclude=.DS_Store "$@"
     fi
 }
- 
+
 bin_script() {
     local func_name="$0"
     _bin_script_usage() {
@@ -65,4 +65,17 @@ print_term_col() {
 	for i in {0..255}; do
 		print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$'\n'}
 	done
+}
+
+print_masked_key() {
+    local key="$1"
+    local len=${#key}
+
+    if [[ -z "$key" ]]; then
+        echo "(not set)"
+    elif [[ "$len" -le 8 ]]; then
+        echo "***"
+    else
+        echo "${key:0:3}...${key: -3}"
+    fi
 }
