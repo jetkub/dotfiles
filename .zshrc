@@ -1,5 +1,5 @@
 # Start timing. Comment PROMPT_TIMING to disable. -v checks if variable is set.
-PROMPT_TIMING=true
+# PROMPT_TIMING=true
 if [[ -v PROMPT_TIMING ]]; then
     PROMPT_START_TIME=$(($(date +%s%N)/1000000)) # DEBUG
 fi
