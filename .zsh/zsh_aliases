@@ -24,3 +24,7 @@ alias mdf="git --git-dir=$HOME/.mdf/ --work-tree=$HOME"
 # show color and use git style diff
 alias diff='diff --color=auto -u'
 
+# restrict search path to system man dir
+# useful when command obtained through homebrew shadows a system
+# provided command, e.g. `cmp`
+alias sys-man='man -M /usr/share/man'
