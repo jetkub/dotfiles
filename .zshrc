@@ -1,5 +1,5 @@
 # Start timing. Comment PROMPT_TIMING to disable. -v checks if variable is set.
-#PROMPT_TIMING=true
+PROMPT_TIMING=true
 if [[ -v PROMPT_TIMING ]]; then
     PROMPT_START_TIME=$(($(date +%s%N)/1000000)) # DEBUG
 fi
@@ -24,8 +24,8 @@ setopt hist_expire_dups_first
 setopt extended_history
 
 # Prompt
-source "$ZDOTDIR/zsh_prompt"
-#PS1="%F{red}%n%f%F{253}@%f%F{red}%m%f%F{253}:%f%B%F{74}%2~%f%b %B%F{79}%% %f%b"
+# disable Python venv prompt; handle in $ZDOTDIR/zsh_prompt
+export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 case $HOST in
     mbpro*|Mac*)    _prompt_color='red' ;;
@@ -34,10 +34,7 @@ case $HOST in
     *)              _prompt_color='blue' ;;
 esac
 
-precmd() {
-  local git_info=$(git_prompt_info)
-  PS1="%F{$_prompt_color}%n%f%F{253}@%f%F{$_prompt_color}%m%f%F{253}:%f%B%F{74}%2~%f%b${git_info} %B%F{79}%% %f%b"
-}
+source "$ZDOTDIR/zsh_prompt"
 
 # Create cache and completions dir and add to $fpath
 mkdir -p "$ZSH_CACHE_DIR/completions"
