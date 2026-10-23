@@ -1,11 +1,12 @@
+z_ed_rc()      { $EDITOR $ZDOTDIR/.zshrc; }
+z_ed_env()     { $EDITOR $ZDOTDIR/.zshenv; }
+z_ed_profile() { $EDITOR $ZDOTDIR/.zprofile; }
+z_ed_alias()   { $EDITOR $ZDOTDIR/aliases.zsh; }
+z_ed_kb()      { $EDITOR $ZDOTDIR/key_binds.zsh; }
+
 z_reload_shell() {
-    echo "Reloading zsh configuration..."
-    source ~/.zshenv
-    [[ -f ~/.zprofile ]] && source ~/.zprofile
-    source ~/.zshrc
-    # rebuild command completion hash table
-    rehash
-    echo "Done."
+    echo "Reloading zsh configuration."
+    exec zsh -l
 }
 
 extract_tar() {
@@ -26,18 +27,8 @@ z_search_conf() {
     fi
 
     # Search for the pattern and color the output
-    grep -irn --color=always "$1" ~/.zshenv ~/.zshrc ~/.zprofile ~/.zsh/zsh* |
-    grep -Ev "brew_formulae|zsh_history"
-}
-
-# overwrite rsync to exclude macOS cruft
-rsync() {
-    local exclude_file="$HOME/.rsync/exclude"
-    if [[ -f "$exclude_file" ]]; then
-        command rsync --exclude-from="$exclude_file" "$@"
-    else
-        command rsync --exclude=.DS_Store "$@"
-    fi
+    grep -irn --color=always "$1" ~/.zshenv $ZDOTDIR |
+        grep -Ev "brew_formulae|zsh_history"
 }
 
 bin_script() {

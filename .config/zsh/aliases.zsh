@@ -1,13 +1,15 @@
 # ls conveniences
 alias ls="ls --color=auto"
-alias ll="ls -halF"
+alias ll="ls -hlF"
+alias la="ls -halF"
 
 # preserve aliases when using sudo
 alias sudo='sudo '
 
-alias split_path="echo $PATH | tr ':' '\n'"
+alias split_path='print -l ${(s/:/)PATH}'
 
 command -v vim >/dev/null && alias vi="vim"
+command -v nvim >/dev/null && alias v="nvim"
 
 # Ruby
 command -v bundle >/dev/null && alias be="bundle exec"

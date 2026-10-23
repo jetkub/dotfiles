@@ -73,15 +73,3 @@ if [[ -n "$COMPLETION_WAITING_DOTS" ]]; then
   bindkey -M viins "^I" expand-or-complete-with-dots
   bindkey -M vicmd "^I" expand-or-complete-with-dots
 fi
-
-# fuzzy completions
-if (( $+commands[fzf] )); then
-    source /usr/share/doc/fzf/examples/completion.zsh 2>/dev/null
-    source /usr/share/doc/fzf/examples/key-bindings.zsh 2>/dev/null
-fi
-
-# az cli completions
-if (( $+commands[az] )) && [[ -v WSL_DISTRO_NAME ]]; then
-    source /etc/bash_completion.d/azure-cli
-fi
-

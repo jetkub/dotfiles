@@ -15,7 +15,7 @@ bindkey "^[[B" down-line-or-beginning-search  # Down arrow
 bindkey "^P"   up-line-or-beginning-search    # Ctrl+P
 bindkey "^N"   down-line-or-beginning-search  # Ctrl+N
 # whatever terminfo says
-bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search   
+bindkey "${terminfo[kcuu1]}" up-line-or-beginning-search
 bindkey "${terminfo[kcud1]}" down-line-or-beginning-search
 
 # [Home]/[End]
@@ -33,7 +33,7 @@ bindkey "^[[3~" delete-char
 bindkey '^[[3;5~' kill-word
 
 # iTerm2 specific setting
-# set Option+Arrow keys to jump by word if 
+# set Option+Arrow keys to jump by word if
 # Profiles > Keys > Key Behavior: Opt = Meta
 if [[ "$LC_TERMINAL" == "iTerm2" ]]; then
   bindkey "^[[1;9C" forward-word   # Option+Right
@@ -47,20 +47,20 @@ bindkey "^[[1;3D" backward-word
 
 # Useful editing commands
 ## Ctrl+r - reverse history search
-bindkey '^r' history-incremental-search-backward  
+bindkey '^r' history-incremental-search-backward
 
 ## Ctrl+U - delete to start of line
 bindkey '^U' backward-kill-line
 
-## Safety feature: pressing Space expands previous command references 
+## Safety feature: pressing Space expands previous command references
 ## (!!, !$, !<cmd-name>) inline so you can see what you're about to run before
 ## executing it
 bindkey ' ' magic-space
 
-## Alt+w deletes the region between the cursor and the mark. 
-## Set the mark with Ctrl+Space. Text is added to the kill ring. 
+## Alt+w deletes the region between the cursor and the mark.
+## Set the mark with Ctrl+Space. Text is added to the kill ring.
 ## Paste with Ctrl+y.
-## Note: ^U, ^K, ^W also add to the kill ring, so ^Y yanks 
+## Note: ^U, ^K, ^W also add to the kill ring, so ^Y yanks
 ## the most recent kill from any of them.
 bindkey '\ew' kill-region
 
@@ -71,6 +71,3 @@ bindkey '\C-x\C-e' edit-command-line  # Ctrl+x Ctrl+e
 
 ## Copy previous word
 bindkey "^[m" copy-prev-shell-word    # Alt+m
-
-# Remove conflicting bindings
-bindkey -r "^;" 2>/dev/null || true
