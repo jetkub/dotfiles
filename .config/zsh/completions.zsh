@@ -2,7 +2,7 @@
 zmodload -i zsh/complist
 
 # Clear WORDCHARS for better word-based completion
-WORDCHARS=''
+# WORDCHARS=''
 
 # Completion behavior options
 # setopt menu_complete     # enable autoselection of first completion entry

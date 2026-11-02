@@ -61,6 +61,31 @@ autoload -Uz compinit && compinit -d "$ZSH_CACHE_DIR/zcompdump"
 autoload -Uz bashcompinit && bashcompinit
 
 
+# --- Plugin manager ---
+#
+# to fix "(eval):325: command not found: compdef",
+# load `antidote` _after_ running compinit.
+#
+# Caveat: Antidote's docs suggest `autoload -Uz compinit &&
+# compinit` after loading plugins, but that only works if no
+# plugin calls compdef while loading. Running it first is safer.
+# The one catch is that plugins which add completion directories
+# to fpath (like zsh-users/zsh-completions) must be on fpath
+# before compinit. If adding that type of plugin later, either
+# add its directory to fpath manually before compinit, or use
+# antidote's attmc3/ez-compinit bundle, which its docs list for
+# this purpose
+
+source "$ZDOTDIR/.antidote/antidote.zsh"
+
+[[ -f $ZDOTDIR/.zsh_plugins.txt ]] || touch "$ZDOTDIR/.zsh_plugins.txt"
+
+export ANTIDOTE_HOME="${XDG_CACHE_HOME:-$HOME}/.antidote"
+
+# initialize plugins statically with $ZDOTDIR/.zsh_plugins.txt
+antidote load
+
+
 # --- Load config modules ---
 
 source "$ZDOTDIR/completions.zsh"
