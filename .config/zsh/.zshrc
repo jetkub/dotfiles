@@ -119,7 +119,7 @@ fi
 
 # iTerm2
 if [[ "$LC_TERMINAL" == "iTerm2" ]]; then
-    [[ -f "$HOME/.iterm2_shell_integration.zsh" ]] && source "$HOME/.iterm2_shell_integration.zsh"
+    [[ -f "$ZDOTDIR/.iterm2_shell_integration.zsh" ]] && source "$ZDOTDIR/.iterm2_shell_integration.zsh"
 fi
 
 
