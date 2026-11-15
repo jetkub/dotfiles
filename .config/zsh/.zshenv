@@ -32,7 +32,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     SHELL_SESSION_DIR="$XDG_STATE_HOME/zsh/sessions"
 
     # machine-specific
-    if [[ "$HOST" == "mbpro*" ]]; then
+    if [[ "$HOST" == "mbpro"* ]]; then
         export LIMA_HOME="$HOME/.lima"
         export MY_PROJECTS="$HOME/Desktop/Projects"
         export MY_NOTES="$HOME/Desktop/Resources/Notes"
