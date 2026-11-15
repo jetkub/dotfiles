@@ -99,6 +99,7 @@ if empty(mapcheck('<C-W>', 'i'))
   inoremap <C-W> <C-G>u<C-W>
 endif
 
+" Surround word with character pairs 
 nnoremap <Leader>* ciw*<C-r>"*<Esc>
 nnoremap <Leader>" ciw"<C-r>""<Esc>
 nnoremap <Leader>' ciw'<C-r>"'<Esc>
@@ -115,6 +116,10 @@ cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 cnoremap <C-p> <Up>
 cnoremap <C-n> <Down>
+
+" Keep the selection after indenting so you can press `>` repeatedly:
+vnoremap < <gv
+vnoremap > >gv
 
 " =============================================================================
 " FUNCTIONS & COMMANDS
