@@ -1,7 +1,7 @@
 -- LOAD CONFIG
 -- require("")
-require('mini.surround').setup()
-require('config.jellybeans')
+--require('mini.surround').setup()
+--require('config.jellybeans')
 
 -- =============================================================================
 -- OPTIONS
@@ -21,7 +21,7 @@ vim.opt.number        = true
 vim.opt.linebreak     = true
 
 -- Colors 
-vim.cmd.colorscheme('jellybeans-default')
+vim.cmd.colorscheme('jellybeans')
 
 -- Invisible characters shown with :set list
 vim.opt.listchars = { tab = "▸ ", eol = "¬", space = "·", trail = "~", extends = ">", precedes = "<" }
