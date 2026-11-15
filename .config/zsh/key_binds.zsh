@@ -54,9 +54,11 @@ bindkey "^[[3~" delete-char             # Delete key
 
 
 # Characters (besides letters and digits) that count as part of a word.
-typeset -g MY_WORDCHARS='*?_-.~=$&;%(){}<>'
-typeset -g MY_WORD_SUFFIX='/'    # may trail a word; deleted with it
-typeset -g MY_COARSE_WORDCHARS='_.$-/:~@%+=?&'  # coarse: part of a word
+#typeset -g MY_WORDCHARS='*?_-.~=$&;%(){}<>'
+typeset -g MY_WORDCHARS='?_~$&;%'
+typeset -g MY_WORD_SUFFIX='/.-'    # may trail a word; deleted with it
+#typeset -g MY_COARSE_WORDCHARS='_.$-/:~@%+=?&'  # coarse: part of a word
+typeset -g MY_COARSE_WORDCHARS='*?_-.~$@%+=?&(){}<>'  # coarse: part of a word
 
 # _mw_len back|fwd <wordchars> <suffixchars>  ->  token length in $REPLY
 _mw_len() {
