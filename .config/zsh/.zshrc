@@ -76,14 +76,13 @@ autoload -Uz bashcompinit && bashcompinit
 # antidote's attmc3/ez-compinit bundle, which its docs list for
 # this purpose
 
-source "$ZDOTDIR/.antidote/antidote.zsh"
-
-[[ -f $ZDOTDIR/.zsh_plugins.txt ]] || touch "$ZDOTDIR/.zsh_plugins.txt"
-
-export ANTIDOTE_HOME="${XDG_CACHE_HOME:-$HOME}/.antidote"
-
-# initialize plugins statically with $ZDOTDIR/.zsh_plugins.txt
-antidote load
+if [[ -f $ZDOTDIR/.antidote/antidote.zsh ]]; then
+    source "$ZDOTDIR/.antidote/antidote.zsh"
+    [[ -f $ZDOTDIR/.zsh_plugins.txt ]] || touch "$ZDOTDIR/.zsh_plugins.txt"
+    export ANTIDOTE_HOME="${XDG_CACHE_HOME:-$HOME}/.antidote"
+    # initialize plugins statically with $ZDOTDIR/.zsh_plugins.txt
+    antidote load
+fi
 
 
 # --- Load config modules ---
