@@ -32,6 +32,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     SHELL_SESSION_DIR="$XDG_STATE_HOME/zsh/sessions"
 
     # machine-specific
+    ## personal
     if [[ "$HOST" == "mbpro"* ]]; then
         export LIMA_HOME="$HOME/.lima"
         export MY_PROJECTS="$HOME/Desktop/Projects"
@@ -40,18 +41,15 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         export SCRIPTEDITOR_DIR="$HOME/Library/Mobile Documents/com~apple~ScriptEditor2/Documents"
         export BBEDIT_DIR="$HOME/Library/Mobile Documents/iCloud~com~barebones~bbedit/Documents/Application Support"
     fi
-fi
 
-# machine-specific
-if [[ "$HOST" == "mbpro*" ]]; then
-    export LIMA_HOME="$HOME/.lima"
-    export MY_PROJECTS="$HOME/Desktop/Projects"
-    export MY_NOTES="$HOME/Desktop/Resources/Notes"
-    export MY_SCRIPTS="$HOME/Desktop/Projects/Scripts"
-    export SCRIPTEDITOR_DIR="$HOME/Library/Mobile Documents/com~apple~ScriptEditor2/Documents"
-    export BBEDIT_DIR="$HOME/Library/Mobile Documents/iCloud~com~barebones~bbedit/Documents/Application Support"
-fi
+    ## work
+    if [[ "$HOST" == "CFX1"* ]]; then
+        export MY_PROJECTS="$HOME/My/Projects/"
+        export MY_SCRIPTS="$HOME/My/Projects/Code/utilities/"
+        export MY_SSH_CONF="$HOME/My/Areas/Configuration/ssh/config"
+    fi
 
+fi
 
 # Linux-specific
 if [[ "$OSTYPE" == "linux"* ]]; then
